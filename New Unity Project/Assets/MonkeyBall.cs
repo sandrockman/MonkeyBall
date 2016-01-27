@@ -7,6 +7,9 @@ public class MonkeyBall : MonoBehaviour {
     public float minTilt = 5f;
     public float sensitivity = 1f;
 
+    public Transform monkeyPivot;
+    public float monkeyLookSpeed = 10f;
+
     Vector3 totalRotation = Vector3.zero;
 
     void Awake()
@@ -17,7 +20,7 @@ public class MonkeyBall : MonoBehaviour {
         }
         else
         {
-            Application.Quit;
+            Application.Quit();
         }
     }
 
@@ -46,11 +49,28 @@ public class MonkeyBall : MonoBehaviour {
 
     void FixedUpdate()
     {
-        body.AddTorque(totalRotation * sensitivity)
+        body.AddTorque(totalRotation * sensitivity);
     }
 
-    void RandomFunction()
+    void LateUpdate()
     {
+        if(monkeyPivot != null)
+        {
+            //which direction is ball moving
+            Vector3 velocity = body.velocity;
+            //Zero out the y so monkey does not look up/down
+            velocity.y = 0f;
 
+            //Determine direction monkey is facing
+            Vector3 forward = monkeyPivot.forward;
+            forward.y = 0f;
+
+            //Frame Rate independent
+            float step = monkeyLookSpeed * Time.deltaTime;
+
+            //Rotate the monkey in the new direction
+            //Vector3.RotateTowards(Currentfacing, desired Movement, speed, (ignore this));
+            Vector3 newFacing = Vector3.RotateTowards(forward, velocity, step, 0f);
+        }
     }
 }
