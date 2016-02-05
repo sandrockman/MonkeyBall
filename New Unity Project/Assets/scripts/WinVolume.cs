@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class WinVolume : MonoBehaviour {
 
-    public GameObject victoryText;
-    public GameObject outOfTimeText;
+    public GameObject victoryObj;
+    public GameObject outOfTimeObj;
+    public GameObject endLevelObj;
 
     public Text timer;
     public float timeLimit = 60f;
@@ -14,15 +15,17 @@ public class WinVolume : MonoBehaviour {
 
     void Awake()
     {
-        victoryText.SetActive(false);
-        outOfTimeText.SetActive(false);
+        victoryObj.SetActive(false);
+        outOfTimeObj.SetActive(false);
+        endLevelObj.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (countDown)
         {
-            victoryText.SetActive(true);
+            victoryObj.SetActive(true);
+            endLevelObj.SetActive(true);
             other.attachedRigidbody.isKinematic = true;
             countDown = false;
         }
@@ -38,7 +41,8 @@ public class WinVolume : MonoBehaviour {
 
         if(timeLimit <= 0f)
         {
-            outOfTimeText.SetActive(true);
+            outOfTimeObj.SetActive(true);
+            endLevelObj.SetActive(true);
             timer.gameObject.SetActive(false);
             countDown = false;
         }

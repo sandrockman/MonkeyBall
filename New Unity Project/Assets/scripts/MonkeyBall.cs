@@ -14,9 +14,10 @@ public class MonkeyBall : MonoBehaviour {
 
     void Awake()
     {
+        Input.gyro.enabled = true;
+
         if (SystemInfo.supportsGyroscope)
         {
-            Input.gyro.enabled = true;
         }
         else
         {
