@@ -35,6 +35,9 @@ public class BananaBounce : MonoBehaviour {
         spinSpeed /= divider;
 
         if (health <= 0)
+        {
+            CountBananas.bananaCount++;
             Destroy(gameObject);
+        }
     }
 }

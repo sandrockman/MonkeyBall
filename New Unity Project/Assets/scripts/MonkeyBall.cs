@@ -10,6 +10,8 @@ public class MonkeyBall : MonoBehaviour {
     public Transform monkeyPivot;
     public float monkeyLookSpeed = 10f;
 
+    public bool isCentering = false;
+
     Vector3 totalRotation = Vector3.zero;
 
     void Awake()
@@ -45,11 +47,18 @@ public class MonkeyBall : MonoBehaviour {
             rotation.z = 0;
 
         totalRotation += new Vector3(rotation.x, rotation.z, rotation.y) * Time.deltaTime;
-
+        
     }
 
     void FixedUpdate()
     {
+        if(isCentering)
+        {
+            body.angularVelocity = Vector3.zero;
+            totalRotation = Vector3.zero;
+            isCentering = false;
+        }
+        else
         body.AddTorque(totalRotation * sensitivity);
     }
 
@@ -75,5 +84,13 @@ public class MonkeyBall : MonoBehaviour {
 
             monkeyPivot.rotation = Quaternion.LookRotation(newFacing);
         }
+    }
+
+    public void _CenterButton()
+    {
+        isCentering = true;
+        body.angularVelocity = Vector3.zero;
+        totalRotation = Vector3.zero;
+        Debug.Log("Angular Velocity: " + body.angularVelocity);
     }
 }
