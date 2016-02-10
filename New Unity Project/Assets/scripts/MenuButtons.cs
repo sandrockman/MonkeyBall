@@ -52,6 +52,7 @@ public class MenuButtons : MonoBehaviour {
 
     public void _Level2Button()
     {
+        Debug.Log("Moving to Level 2...");
         SceneManager.LoadScene("Level2");
     }
 
