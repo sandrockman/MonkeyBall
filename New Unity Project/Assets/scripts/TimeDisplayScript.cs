@@ -24,7 +24,7 @@ public class TimeDisplayScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	
+        PullPlayerPrefs();
 	}
 	
 	void PullPlayerPrefs()
@@ -35,11 +35,11 @@ public class TimeDisplayScript : MonoBehaviour {
         level4Tries = PlayerPrefs.GetFloat("Level4Plays");
         level5Tries = PlayerPrefs.GetFloat("Level5Plays");
 
-        level1Avg = PlayerPrefs.GetFloat("Level1TotalTime") / level1Tries;
-        level2Avg = PlayerPrefs.GetFloat("Level2TotalTime") / level2Tries;
-        level3Avg = PlayerPrefs.GetFloat("Level3TotalTime") / level3Tries;
-        level4Avg = PlayerPrefs.GetFloat("Level4TotalTime") / level4Tries;
-        level5Avg = PlayerPrefs.GetFloat("Level5TotalTime") / level5Tries;
+        level1Avg = FindAvg(PlayerPrefs.GetFloat("Level1TotalTime") , level1Tries);
+        level2Avg = FindAvg(PlayerPrefs.GetFloat("Level2TotalTime") , level2Tries);
+        level3Avg = FindAvg(PlayerPrefs.GetFloat("Level3TotalTime") , level3Tries);
+        level4Avg = FindAvg(PlayerPrefs.GetFloat("Level4TotalTime") , level4Tries);
+        level5Avg = FindAvg(PlayerPrefs.GetFloat("Level5TotalTime") , level5Tries);
 
         Level1AvgText.text = string.Format("AVG Time\n{0:f2}", level1Avg);
         Level1TriesText.text = string.Format("X Done:\n{0:f0}", level1Tries);
@@ -57,5 +57,13 @@ public class TimeDisplayScript : MonoBehaviour {
         Level5TriesText.text = string.Format("X Done:\n{0:f0}", level5Tries);
 
 
+    }
+
+    float FindAvg(float total, float divider)
+    {
+        if (divider <= 0)
+            return 0;
+        else
+            return total / divider;
     }
 }
